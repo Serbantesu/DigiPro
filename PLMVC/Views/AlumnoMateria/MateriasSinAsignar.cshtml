@@ -1,0 +1,88 @@
+﻿@model ML.AlumnoMateria
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <section>
+        <h2 class="text-center">Agregar Materias al Alumno @Model.Alumno.Nombre @Model.Alumno.ApellidoPaterno @Model.Alumno.ApellidoMaterno</h2>
+        <p>
+            En este modulo puedes visualizar las Materias existentes y agregarlas a un Alumno(a), asi como ver el costo total de estas<br />
+        </p>
+    </section>
+    <section>
+    </section>
+    <hr />
+
+    <p>
+
+    </p>
+    @using (Html.BeginForm("MateriaSinAsignar", "AlumnoMateria", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {        
+        <div style="float:left">
+            <a class="btn btn-secondary bi bi-arrow-return-left" href="@Url.Action("Materias","AlumnoMateria", new { IdAlumno = Model.Alumno.IdAlumno})"> Regresar</a>
+        </div>
+        <section>
+            <table class="table table-info table-striped table-bordered table-responsive-lg">
+                <thead class="table-dark">
+                    <tr>
+                        <td class="text-center" style="font-weight:bold;">Seleccionar</td>
+                        <td class="text-center" style="font-weight:bold;">Nombre Materia</td>
+                        <td class="text-center" style="font-weight:bold;">Costo</td>
+                    </tr>
+                </thead>
+                @foreach (ML.AlumnoMateria alumnoMateria in Model.AlumnoMaterias)
+                {
+                    @*<td class="visually-hidden">@alumnoMateria.Materia.IdMateria</td>*@
+                    <tr>                        
+                        <td class="text-center">
+                            <input id="checkbox_@alumnoMateria.Materia.IdMateria" type="checkbox" value="@alumnoMateria.Materia.IdMateria " name="AlumnoMaterias" onclick="CalcularTotal(@alumnoMateria.Materia.Costo, @alumnoMateria.Materia.IdMateria)">
+                        </td>
+                        <td>@alumnoMateria.Materia.Nombre</td>
+                        <td>@alumnoMateria.Materia.Costo</td>
+                    </tr>
+
+                }
+                <tr>
+                    <td class=" visually-hidden"></td>
+                    <td class="text-center">Total:</td>
+                    <td id="total" class="text-center">0</td>
+                </tr>
+            </table>
+            <div class="form-group col-md-12">
+                <div class="text-right">
+                    <div class="col">
+                        @Html.LabelFor(model => model.Alumno.IdAlumno, new { @class = "visually-hidden" })
+                        @Html.TextBoxFor(model => model.Alumno.IdAlumno, new { @class = "visually-hidden" })
+                    </div>
+                    <input class="btn btn-success" type="submit" value="Agregar" />
+                </div>
+            </div>
+        </section>
+    }
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    function CalcularTotal(Costo, IdMateria) {
+        if ($('#checkbox_' + IdMateria).is(':checked')) {
+            var total = parseInt($('#total').text())
+            total = total + Costo;
+            $('#total').text(total)
+        }
+        else {
+            var total = parseInt($('#total').text())
+            total = total - Costo;
+            if (total < 0) {
+                total = 0;
+            }
+            $('#total').text(total)            
+        }
+
+    }
+</script>
+

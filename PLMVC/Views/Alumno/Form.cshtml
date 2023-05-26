@@ -1,0 +1,66 @@
+﻿@model ML.Alumno
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col text-lg-center">
+        <h2>Formulario Alumno</h2>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="align-content-lg-center">
+        @using (Html.BeginForm("Form", "Alumno", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="row">
+                <div class="col">
+                    @Html.LabelFor(model => model.IdAlumno, new { @class = "visually-hidden" })
+                    @Html.TextBoxFor(model => model.IdAlumno, new { @class = "visually-hidden" })
+                </div>
+                <p></p>
+                <div class="col">
+                    @Html.LabelFor(model => model.Nombre)
+                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @placeholder = "Ejemplo: Daniel", @onkeypress = "SoloLetras(event, 'txtNombre','lblNombre')" })
+                    @Html.ValidationMessageFor(model => model.Nombre, null, new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.ApellidoPaterno)
+                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno", @onkeypress = "SoloLetras(event,'txtApellidoPaterno','lblApellidoPaterno')" })
+                    @Html.ValidationMessageFor(model => model.ApellidoPaterno, null, new { @class = "text-danger" })
+
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.ApellidoMaterno)
+                    @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno", @onkeypress = "SoloLetras(event,'txtApellidoMaterno','lblApellidoMaterno')" })
+                    @Html.ValidationMessageFor(model => model.ApellidoMaterno, null, new { @class = "text-danger" })
+                </div>
+
+                <div class="col-form-label-lg">
+                    <input type="submit" value="Guardar" class="openModal btn btn-success" />
+                    @Html.ActionLink("Regresar", "GetAll", "Alumno", htmlAttributes: new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function SoloLetras(e, idTextBox, idLabel) {
+        var caracter = e.key;
+        if (!/^[a-zA-Z]/g.test(caracter)) {
+            $('#' + idLabel).text("Solo se Aceptan Letras");
+            $('#' + idLabel).css({ "color": "red" });
+            $('#' + idTextBox).css({ "border-color": "red", "background-color": "#f8d7da" });
+            return false;
+        }
+        else {
+            $('#' + idLabel).text("");
+            $('#' + idTextBox).css({ "border-color": "green", "background-color": "#cdeea1" });
+            return true;
+        }
+    }
+
+</script>

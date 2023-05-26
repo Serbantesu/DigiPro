@@ -1,0 +1,56 @@
+﻿@model ML.Alumno
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <section>
+        <h2>Modulo de Alumnos</h2>
+        <p>
+            En este modulo puedes visualizar a los Alumnos existentes asi como agregar, modificar y eliminar los registros<br />
+        </p>
+    </section>
+    <section>
+        <div style="float:right">
+            @Html.ActionLink(" Agregar", "Form", "Alumno", htmlAttributes: new { @class = "btn btn-success bi bi-person-add" })
+        </div>
+    </section>
+    <hr />
+
+    <p>
+
+    </p>
+    <section>
+        <table class="table table-success table-striped table-bordered table-responsive-lg">
+            <thead class="table-dark">
+                <tr>
+                    <td class="text-center" style="font-weight:bold;">Editar</td>
+
+                    <td class="visually-hidden">IdAlumno</td>
+                    <td class="text-center" style="font-weight:bold;">Nombre</td>
+                    <td class="text-center" style="font-weight:bold;">ApellidoPaterno</td>
+                    <td class="text-center" style="font-weight:bold;">ApellidoMaterno</td>                                                            
+
+                    <td class="text-center" style="font-weight:bold;">Eliminar</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ML.Alumno alumno in Model.Alumnos)
+                {
+                    <tr>
+                        <td class="text-center"><a class="btn btn-warning bi bi-pencil-square" href="@Url.Action("Form","Alumno", new { IdAlumno = alumno.IdAlumno})"></a></td>
+                        <td class="visually-hidden">@alumno.IdAlumno</td>
+                        <td>@alumno.Nombre</td>
+                        <td>@alumno.ApellidoPaterno</td>
+                        <td>@alumno.ApellidoMaterno</td>
+
+                        <td class="text-center"><a class="btn btn-danger bi bi-trash3" href="@Url.Action("Delete","Aseguradora", new { IdAlumno = alumno.IdAlumno })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+
+
+</div>

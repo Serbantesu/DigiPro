@@ -1,0 +1,40 @@
+﻿@model ML.Materia
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col text-lg-center">
+        <h2>Formulario Materia</h2>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="align-content-lg-center">
+        @using (Html.BeginForm("Form", "Materia", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="row">
+                <div class="col">
+                    @Html.LabelFor(model => model.IdMateria, new { @class = "visually-hidden" })
+                    @Html.TextBoxFor(model => model.IdMateria, new { @class = "visually-hidden" })
+                </div>
+                <p></p>
+                <div class="col">
+                    @Html.LabelFor(model => model.Nombre)
+                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre" })
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.Costo)
+                    @Html.TextBoxFor(model => model.Costo, new { @class = "form-control", @id = "txtNombre" })
+                </div>
+                <div class="col-form-label-lg">
+                    <input type="submit" value="Guardar" class="openModal btn btn-success" />
+                    @Html.ActionLink("Regresar", "GetAll", "Materia", htmlAttributes: new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+

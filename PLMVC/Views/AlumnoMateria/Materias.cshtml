@@ -1,0 +1,67 @@
+﻿@model ML.AlumnoMateria
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <section>
+        <h2 class="text-center">Materias Asignadas al Alumno(a) @Model.Alumno.Nombre @Model.Alumno.ApellidoPaterno @Model.Alumno.ApellidoMaterno</h2>
+
+        <p>
+            En este modulo puedes visualizar las Materias asignadas del Alumno asi como agregar y eliminar<br />
+        </p>
+    </section>
+    <section>
+        <div style="float:left">
+            @Html.ActionLink(" Regresar", "GetAll", "AlumnoMateria", htmlAttributes: new { @class = "btn btn-secondary bi bi-arrow-return-left" })
+        </div>
+        <div style="float:right">
+
+            @*@Html.ActionLink(" Agregar", "MateriasSinAsignar", "AlumnoMateria", htmlAttributes: new { ,@class = "btn btn-success bi bi-plus-circle" })*@
+            <a class="btn btn-success bi bi-plus-circle" href="@Url.Action("MateriasSinAsignar","AlumnoMateria", new { IdAlumno = Model.Alumno.IdAlumno})"> Agregar</a>
+        </div>
+    </section>
+    <hr />
+    <p>
+    </p>
+    <a></a>
+    <section>
+        @using (Html.BeginForm("Delete", "AlumnoMateria", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <table class="table table-light table-striped table-bordered table-responsive-lg">
+                <thead class="table-dark">
+                    <tr>
+                        <td class="align-content-start" style="font-weight:bold;">Eliminar</td>
+                        <td class="visually-hidden">IdAlumnoMateria</td>
+                        <td class="visually-hidden">IdAlumno</td>
+                        <td class="visually-hidden">IdMateria</td>
+                        <td class="text-center" style="font-weight:bold;">Nombre Materia</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ML.AlumnoMateria alumnoMateria in Model.AlumnoMaterias)
+                    {
+                        <tr>
+                            @*<td style="float:left" class="border-top" class="text-center"><a class="btn btn-info bi bi-info-circle" href="@Url.Action("MateriasSinAsignar","AlumnoMateria", new { IdAlumno = alumnoMateria.Alumno.IdAlumno})"></a></td>*@
+                            <td class="text-center">
+                                <input type="checkbox" value="@alumnoMateria.IdAlumnoMateria" name="AlumnoMaterias">
+                            </td>
+                            <td class="visually-hidden">@alumnoMateria.Alumno.IdAlumno</td>
+                            <td class="visually-hidden">@alumnoMateria.Materia.IdMateria</td>
+                            <td>@alumnoMateria.Materia.Nombre</td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            <div class="form-group col-md-12">
+                <div class="text-right">
+                    @Html.LabelFor(model => model.Alumno.IdAlumno, new { @class = "visually-hidden" })
+                    @Html.TextBoxFor(model => model.Alumno.IdAlumno, new { @class = "visually-hidden" })
+                    <input class="btn btn-danger" type="submit" value="Eliminar" />
+                </div>
+            </div>
+        }
+    </section>
+</div>

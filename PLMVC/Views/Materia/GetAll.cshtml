@@ -1,0 +1,53 @@
+﻿@model ML.Materia
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <section>
+        <h2>Modulo de Materias</h2>
+        <p>
+            En este modulo puedes visualizar a las Materias existentes asi como agregar, modificar y eliminar los registros<br />
+        </p>
+    </section>
+    <section>
+        <div style="float:right">
+            @Html.ActionLink(" Agregar", "Form", "Alumno", htmlAttributes: new { @class = "btn btn-success bi bi-person-add" })
+        </div>
+    </section>
+    <hr />
+
+    <p>
+
+    </p>
+    <section>
+        <table class="table table-warning table-striped table-bordered table-responsive-lg">
+            <thead class="table-dark">
+                <tr>
+                    <td class="text-center" style="font-weight:bold;">Editar</td>
+
+                    <td class="visually-hidden">IdMateria</td>
+                    <td class="text-center" style="font-weight:bold;">Nombre</td>
+                    <td class="text-center" style="font-weight:bold;">Costo</td>                    
+
+                    <td class="text-center" style="font-weight:bold;">Eliminar</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ML.Materia materia  in Model.Materias)
+                {
+                    <tr>
+                        <td class="text-center"><a class="btn btn-warning bi bi-pencil-square" href="@Url.Action("Form","Materia", new { IdMateria = materia.IdMateria})"></a></td>
+                        <td class="visually-hidden">@materia.IdMateria</td>
+                        <td>@materia.Nombre</td>
+                        <td>@materia.Costo</td>                        
+                        <td class="text-center"><a class="btn btn-danger bi bi-trash3" href="@Url.Action("Delete","Materia", new { IdMateria = materia.IdMateria })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+
+
+</div>
